@@ -7,20 +7,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo-wrapper">
-            <img src="/dist/assets/globe.svg" alt="logo" class="header-svg">
-            <h1>Wthr</h1>
+    <nav class="top-nav">
+        <a href="#" class="logo"> 
+            <img src="/dist/assets/globe.svg" alt="logo" class="top-svg">
+             Wthr
+        </a>
+        <form action="#" class="search" method="get">
+            <input 
+                class="search-input"
+                type="search"
+                placeholder="Search location"
+                autocomplete="off"
+            />
+            <button class="search-submit submit" type="submit">
+                <img src="/dist/assets/search.svg" alt="search" class="top-svg submit">
+            </button>
+        </form>
+        <div class="settings">
+            <button class="settings-button settings-metric" id="celsius-button">°C, m/s</button>
+            <button class="settings-button settings-imperial" id="fahrenheit-button">°F, mph</button>
         </div>
-        <div class="search-wrapper">
-            <input type="search" placeholder="Search location">
-            <button type="submit" id="search-submit"><img src="/dist/assets/search.svg" alt="search" class="header-svg"></button>
-        </div>
-        <div class="button-wrapper">
-            <button class="temperature-button" id="celsius-button">°C, m/s</button>
-            <button class="temperature-button" id="fahrenheit-button">°F, mph</button>
-        </div>
-    </header>
+    </nav>
 
     <main>
         <div class="location-wrapper">
@@ -28,8 +35,36 @@
             <h3 class="time-display"></h3>
         </div>
         <div class="weather-wrapper">
+            <div class="left-weather">
+                <h1 class="current-temp">a</h1>
+                <h2 class="description">b</h2>
+                <h3>Feels like <span class="feels-like"></span></h3>
+            </div>
 
+            <div class="right-weather">
+                <div>
+                    <h3>Wind</h3>
+                    <h2 class="wind-data"></h2>
+                </div>
+                <div>
+                    <h3>Humidity</h3>
+                    <h2 class="humidity-data"></h2>
+                </div>
+                <div>
+                    <h3>UV Index</h3>
+                    <h2 class="uv-data"></h2>
+                </div>
+                <div>
+                    <h3>Visibility</h3>
+                    <h2 class="visibility-data"></h2>
+                </div>
+                <div>
+                    <h3>Cloudiness</h3>
+                    <h2 class="cloud-data"></h2>
+                </div>
+            </div>
         </div>
+        
         <div class="forecast-wrapper">
 
         </div>
