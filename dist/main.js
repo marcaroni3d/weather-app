@@ -1,0 +1,1 @@
+!async function(c){const n=await fetch("https://api.weatherapi.com/v1/current.json?key=dbf592303e174c8d8d620709242601&q=cincinnati",{mode:"cors"}),o=await n.json();console.log(o)}();

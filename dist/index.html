@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/dist/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-wrapper">
+            <img src="/dist/assets/globe.svg" alt="logo" class="header-svg">
+            <h1>Wthr</h1>
+        </div>
+        <div class="search-wrapper">
+            <input type="search" placeholder="Search location">
+            <button type="submit" id="search-submit"><img src="/dist/assets/search.svg" alt="search" class="header-svg"></button>
+        </div>
+        <div class="button-wrapper">
+            <button class="temperature-button" id="celsius-button">°C, m/s</button>
+            <button class="temperature-button" id="fahrenheit-button">°F, mph</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="location-wrapper">
+            <h1 class="location-display"></h1>
+            <h3 class="time-display"></h3>
+        </div>
+        <div class="weather-wrapper">
+
+        </div>
+        <div class="forecast-wrapper">
+
+        </div>
+    </main>
+
+    <footer>
+        <p>Built by Marcaroni3d</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
