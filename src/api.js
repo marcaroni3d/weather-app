@@ -8,7 +8,6 @@ const api = (() => {
             units,
             location: {
                 city: weatherData.location.name,
-                region: weatherData.location.region,
                 country: weatherData.location.country
             },
             current: {
@@ -20,8 +19,9 @@ const api = (() => {
                 feelsLikeF:Math.round(weatherData.current.feelslike_f),
                 humidity: weatherData.current.humidity,
                 clouds: weatherData.current.cloud,
-                uvi: weatherData.current.uvi,
-                visibility: weatherData.current.vis_miles,
+                uv: weatherData.current.uv,
+                visKm: weatherData.current.vis_km,
+                visMiles: weatherData.current.vis_miles,
                 windSpeedKph: weatherData.current.wind_kph,
                 windSpeedMph: weatherData.current.wind_mph,
                 windDirection: weatherData.current.wind_dir,
@@ -32,14 +32,13 @@ const api = (() => {
         return processedData
     }
 
-    async function fetchWeatherData(location, units = 'imperial') {
+    async function fetchWeatherData(location, units) {
         const response = await fetch(
             `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${location}`, 
-            { mode: 'cors' },
+            { mode: 'cors' }
         )
         const weatherData = await response.json()
-
-        console.log('From API:', weatherData)
+        console.log(weatherData)
         return processData({ weatherData, units })
     }
 
