@@ -7,11 +7,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      }
+      },
     ]
   }
 }
