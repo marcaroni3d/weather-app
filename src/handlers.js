@@ -7,7 +7,7 @@ const handlers = (() => {
     const settingsMetric = document.querySelector('.settings-metric')
     const settingsImperial = document.querySelector('.settings-imperial')
 
-    async function load(input = 'Cincinnati', units = 'Imperial') {
+    async function load(input = 'Cincinnati', units = 'imperial') {
         const weatherData = await api.fetchWeatherData(input, units)
         dom.renderApp(weatherData, units)
     }
