@@ -2,10 +2,11 @@ const dom = (() => {
     const main = document.querySelector('main')
 
     function renderApp(data, units) {
+        renderCurrent(data, units)
         renderForecast(data, units)
     }
 
-    function renderForecast(data, units) {
+    function renderCurrent(data, units) {
         let unitType
         let speedType
         let tempType
@@ -36,7 +37,7 @@ const dom = (() => {
         })()
 
         const locationDisplay = document.querySelector('.location-display')
-        const timeDisplay = document.querySelector('.time-display')
+        const dateDisplay = document.querySelector('.date-display')
         const currentTempDisplay = document.querySelector('.current-temp')
         const descriptionDisplay = document.querySelector('.description')
         const feelsLikeDisplay = document.querySelector('.feels-like')
@@ -47,7 +48,7 @@ const dom = (() => {
         const cloudDisplay = document.querySelector('.cloud-data')
 
         locationDisplay.innerHTML = `${data.location.city}, ${data.location.country}`
-        timeDisplay.innerHTML = `${data.current.time}`
+        dateDisplay.innerHTML = `${data.current.date}`
         currentTempDisplay.innerHTML = `${data.current.temp}°${tempType}`
         descriptionDisplay.innerHTML = `${data.current.description}`
         feelsLikeDisplay.innerHTML = `${data.current.feelsLike}°${tempType}`
@@ -56,6 +57,54 @@ const dom = (() => {
         uvDisplay.innerHTML = `${data.current.uv}`
         visibilityDisplay.innerHTML = `${data.current.vis} ${unitType}`
         cloudDisplay.innerHTML = `${data.current.clouds}%`
+    }
+
+    function renderForecast(data, units) {
+        const forecastData = data.forecast
+        const display = document.querySelector('.forecast')
+        display.innerHTML = ''
+
+        forecastData.forEach(element => {
+            let tempHigh
+            let tempLow
+            const weatherCode = element.day.condition.code
+            const date = new Date(element.date) //CURRENT ERROR: date is one day off
+            const day = date.getDay(date)
+            const dayOfWeek = formatDay(day)
+            if (units == 'imperial') {
+                tempHigh = Math.round(element.day.maxtemp_f)
+                tempLow = Math.round(element.day.mintemp_f)
+            }
+            if (units == 'metric') {
+                tempHigh = Math.round(element.day.maxtemp_c)
+                tempLow = Math.round(element.day.mintemp_c)
+            }
+
+            const content = document.createElement('div')
+            const dayDisplay = document.createElement('h2')
+            const tempHighDisplay = document.createElement('h2')
+            const tempLowDisplay = document.createElement('h2')
+
+            content.classList.add('forecast-item')
+            tempLowDisplay.classList.add('light-blue')
+            
+            dayDisplay.innerHTML = dayOfWeek
+            tempHighDisplay.innerHTML = tempHigh
+            tempLowDisplay.innerHTML = tempLow
+
+
+            content.appendChild(dayDisplay)
+            content.appendChild(tempHighDisplay)
+            content.appendChild(tempLowDisplay)
+
+            display.appendChild(content)
+        })
+
+        function formatDay(index) {
+            const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+            let day = days[index]
+            return day
+        }
     }
 
     return {

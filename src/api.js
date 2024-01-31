@@ -11,7 +11,15 @@ const api = (() => {
                 country: weatherData.location.country
             },
             current: {
-                time: weatherData.location.localtime,
+                date: new Date().toLocaleDateString([], {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }),
                 description: weatherData.current.condition.text,
                 temp: '',
                 tempC: Math.round(weatherData.current.temp_c),
