@@ -1,9 +1,8 @@
 const dom = (() => {
-    const main = document.querySelector('main')
-
     function renderApp(data, units) {
         renderCurrent(data, units)
         renderForecast(data, units)
+        console.log(data)
     }
 
     function renderCurrent(data, units) {
@@ -23,16 +22,16 @@ const dom = (() => {
 
         const formatData = (() => {
             if (units == 'metric') { 
-                data.current.temp = data.current.tempC
-                data.current.feelsLike = data.current.feelsLikeC
-                data.current.vis = data.current.visKm
-                data.current.windSpeed = data.current.windSpeedKph
+                data.weatherData.current.temp = data.weatherData.current.tempC
+                data.weatherData.current.feelsLike = data.weatherData.current.feelsLikeC
+                data.weatherData.current.vis = data.weatherData.current.visKm
+                data.weatherData.current.windSpeed = data.weatherData.current.windSpeedKph
             }
             if (units == 'imperial') { 
-                data.current.temp = data.current.tempF
-                data.current.feelsLike = data.current.feelsLikeF
-                data.current.vis = data.current.visMiles
-                data.current.windSpeed = data.current.windSpeedMph
+                data.weatherData.current.temp = data.weatherData.current.tempF
+                data.weatherData.current.feelsLike = data.weatherData.current.feelsLikeF
+                data.weatherData.current.vis = data.weatherData.current.visMiles
+                data.weatherData.current.windSpeed = data.weatherData.current.windSpeedMph
             }
         })()
 
@@ -46,28 +45,30 @@ const dom = (() => {
         const uvDisplay = document.querySelector('.uv-data')
         const visibilityDisplay = document.querySelector('.visibility-data')
         const cloudDisplay = document.querySelector('.cloud-data')
+        const chanceOfRainDisplay = document.querySelector('.precipitation-data')
 
-        locationDisplay.innerHTML = `${data.location.city}, ${data.location.country}`
-        dateDisplay.innerHTML = `${data.current.date}`
-        currentTempDisplay.innerHTML = `${data.current.temp}°${tempType}`
-        descriptionDisplay.innerHTML = `${data.current.description}`
-        feelsLikeDisplay.innerHTML = `${data.current.feelsLike}°${tempType}`
-        windDisplay.innerHTML = `${data.current.windSpeed} ${unitType} ${data.current.windDirection}`
-        humidityDisplay.innerHTML = `${data.current.humidity}%`
-        uvDisplay.innerHTML = `${data.current.uv}`
-        visibilityDisplay.innerHTML = `${data.current.vis} ${unitType}`
-        cloudDisplay.innerHTML = `${data.current.clouds}%`
+        locationDisplay.innerHTML = `${data.weatherData.location.city}, ${data.weatherData.location.country}`
+        dateDisplay.innerHTML = `${data.weatherData.current.date}`
+        currentTempDisplay.innerHTML = `${data.weatherData.current.temp}°${tempType}`
+        descriptionDisplay.innerHTML = `${data.weatherData.current.description}`
+        feelsLikeDisplay.innerHTML = `${data.weatherData.current.feelsLike}°${tempType}`
+        windDisplay.innerHTML = `${data.weatherData.current.windSpeed} ${unitType} ${data.weatherData.current.windDirection}`
+        humidityDisplay.innerHTML = `${data.weatherData.current.humidity}%`
+        uvDisplay.innerHTML = `${data.weatherData.current.uv}`
+        visibilityDisplay.innerHTML = `${data.weatherData.current.vis} ${unitType}`
+        cloudDisplay.innerHTML = `${data.weatherData.current.clouds}%`
+        chanceOfRainDisplay.innerHTML = `${data.weatherData.current.chanceOfRain}%`
     }
 
     function renderForecast(data, units) {
-        const forecastData = data.forecast
+        const forecastData = data.weatherData.forecast
         const display = document.querySelector('.forecast')
         display.innerHTML = ''
 
         forecastData.forEach(element => {
             let tempHigh
             let tempLow
-            const weatherCode = element.day.condition.code
+            const weatherCode = element.day.condition.weatherCode
             const date = new Date(element.date) //CURRENT ERROR: date is one day off
             const day = date.getDay(date)
             const dayOfWeek = formatDay(day)

@@ -8,7 +8,7 @@ const handlers = (() => {
     const settingsImperial = document.querySelector('.settings-imperial')
 
     async function load(input = 'Cincinnati', units = 'imperial') {
-        const weatherData = await api.fetchWeatherData(input, units)
+        const weatherData = await api.fetchData(input, units)
         dom.renderApp(weatherData, units)
     }
 

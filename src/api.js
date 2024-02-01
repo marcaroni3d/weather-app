@@ -21,6 +21,7 @@ const api = (() => {
                     day: 'numeric'
                 }),
                 description: weatherData.current.condition.text,
+                weatherCode: weatherData.current.condition.code,
                 temp: '',
                 tempC: Math.round(weatherData.current.temp_c),
                 tempF: Math.round(weatherData.current.temp_f),
@@ -29,6 +30,7 @@ const api = (() => {
                 feelsLikeF:Math.round(weatherData.current.feelslike_f),
                 humidity: weatherData.current.humidity,
                 clouds: weatherData.current.cloud,
+                chanceOfRain: weatherData.forecast.forecastday[0].day.daily_chance_of_rain,
                 uv: weatherData.current.uv,
                 vis: '',
                 visKm: weatherData.current.vis_km,
@@ -37,9 +39,9 @@ const api = (() => {
                 windSpeedKph: weatherData.current.wind_kph,
                 windSpeedMph: weatherData.current.wind_mph,
                 windDirection: weatherData.current.wind_dir,
-                windDegree: weatherData.current.wind_degree 
+                windDegree: weatherData.current.wind_degree
             },
-            forecast: [...weatherData.forecast.forecastday]
+            forecast: [...weatherData.forecast.forecastday],
         }
 
         return processedData
@@ -54,8 +56,22 @@ const api = (() => {
         return processData({ weatherData, units })
     }
 
+    async function fetchWeatherKeys() {
+        const keyData = await fetch(
+            'https://www.weatherapi.com/docs/weather_conditions.json', 
+            { mode: 'cors' })
+        const weatherKeys = await keyData.json()
+        return weatherKeys
+    }
+
+    async function fetchData(location, units) {
+        const weatherData = await fetchWeatherData(location, units)
+        const keys = await fetchWeatherKeys()
+        return { weatherData, keys }
+    }
+
     return {
-        fetchWeatherData
+        fetchData
     }
 })();
 
