@@ -69,9 +69,12 @@ const dom = (() => {
             let tempHigh
             let tempLow
             const weatherCode = element.day.condition.weatherCode
-            const date = new Date(element.date) //CURRENT ERROR: date is one day off
-            const day = date.getDay(date)
-            const dayOfWeek = formatDay(day)
+            console.log(element.date)
+            const d = new Date(element.date)
+            d.setDate(d.getDate() + 1) // Bug fix for when default Date is one day behind
+            const day = d.toLocaleDateString([], { weekday: 'long'})
+            console.log(day)
+
             if (units == 'imperial') {
                 tempHigh = Math.round(element.day.maxtemp_f)
                 tempLow = Math.round(element.day.mintemp_f)
@@ -89,7 +92,7 @@ const dom = (() => {
             content.classList.add('forecast-item')
             tempLowDisplay.classList.add('light-blue')
             
-            dayDisplay.innerHTML = dayOfWeek
+            dayDisplay.innerHTML = day
             tempHighDisplay.innerHTML = tempHigh
             tempLowDisplay.innerHTML = tempLow
 
@@ -100,12 +103,6 @@ const dom = (() => {
 
             display.appendChild(content)
         })
-
-        function formatDay(index) {
-            const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-            let day = days[index]
-            return day
-        }
     }
 
     return {

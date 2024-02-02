@@ -23,6 +23,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^5.0.22"
+    "@fontsource/open-sans": "^5.0.22",
+    "dayjs": "^1.11.10"
   }
 }
