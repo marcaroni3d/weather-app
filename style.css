@@ -7,10 +7,10 @@
     --primary-dark: #333333;
     --primary-light: #fefefe;
     --secondary-light: #eeeeee;
-    --light-blue: #a5cdda;
+    --light-blue: #bcd0e1;
     --dark-blue: #0e2d44;
-    --background-one: #7bbcb4;
-    --background-two: #13547a;
+    --background-one: #8fbce4;
+    --background-two: #113049;
 
     color: var(--primary-light);
     font-family: 'Poppins', 'Roboto', sans-serif;
@@ -125,12 +125,20 @@ main {
   gap: 3rem;
 }
   .left-weather {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
+    display: grid;
+    grid-template: 
+      "temp img"
+      "text img"
+      "desc desc";
     gap: .2rem;
   }
+    .current-icon {
+      grid-area: img;
+      align-self: center;
+      padding: 5px;
+      margin-left: -1rem;
+    }
+
   .right-weather {
     display: grid;
     grid-template:
@@ -164,11 +172,15 @@ main {
   .forecast-item {
     width: 100%;
     display: grid;
-    grid-template-columns: 1.25fr 1fr 1fr;
+    grid-template-columns: 150px 1fr 1fr 1fr ;
+    align-items: center;
     column-gap: .5rem;
     border-bottom: 2px solid var(--light-blue);
     padding: 10px 0 10px 0;
   }
+    .forecast-item > img {
+      height: 50px;
+    }
 
 .light-blue {
   color: var(--light-blue);
