@@ -2,7 +2,6 @@ const dom = (() => {
     function renderApp(data, units) {
         renderCurrent(data, units)
         renderForecast(data, units)
-        console.log(data)
     }
 
     function renderCurrent(data, units) {
@@ -22,16 +21,16 @@ const dom = (() => {
 
         const formatData = (() => {
             if (units == 'metric') { 
-                data.weatherData.current.temp = data.weatherData.current.tempC
-                data.weatherData.current.feelsLike = data.weatherData.current.feelsLikeC
-                data.weatherData.current.vis = data.weatherData.current.visKm
-                data.weatherData.current.windSpeed = data.weatherData.current.windSpeedKph
+                data.current.temp = data.current.tempC
+                data.current.feelsLike = data.current.feelsLikeC
+                data.current.vis = data.current.visKm
+                data.current.windSpeed = data.current.windSpeedKph
             }
             if (units == 'imperial') { 
-                data.weatherData.current.temp = data.weatherData.current.tempF
-                data.weatherData.current.feelsLike = data.weatherData.current.feelsLikeF
-                data.weatherData.current.vis = data.weatherData.current.visMiles
-                data.weatherData.current.windSpeed = data.weatherData.current.windSpeedMph
+                data.current.temp = data.current.tempF
+                data.current.feelsLike = data.current.feelsLikeF
+                data.current.vis = data.current.visMiles
+                data.current.windSpeed = data.current.windSpeedMph
             }
         })()
 
@@ -46,34 +45,33 @@ const dom = (() => {
         const visibilityDisplay = document.querySelector('.visibility-data')
         const cloudDisplay = document.querySelector('.cloud-data')
         const chanceOfRainDisplay = document.querySelector('.precipitation-data')
+        const weatherIconDisplay = document.querySelector('.current-icon')
 
-        locationDisplay.innerHTML = `${data.weatherData.location.city}, ${data.weatherData.location.country}`
-        dateDisplay.innerHTML = `${data.weatherData.current.date}`
-        currentTempDisplay.innerHTML = `${data.weatherData.current.temp}°${tempType}`
-        descriptionDisplay.innerHTML = `${data.weatherData.current.description}`
-        feelsLikeDisplay.innerHTML = `${data.weatherData.current.feelsLike}°${tempType}`
-        windDisplay.innerHTML = `${data.weatherData.current.windSpeed} ${unitType} ${data.weatherData.current.windDirection}`
-        humidityDisplay.innerHTML = `${data.weatherData.current.humidity}%`
-        uvDisplay.innerHTML = `${data.weatherData.current.uv}`
-        visibilityDisplay.innerHTML = `${data.weatherData.current.vis} ${unitType}`
-        cloudDisplay.innerHTML = `${data.weatherData.current.clouds}%`
-        chanceOfRainDisplay.innerHTML = `${data.weatherData.current.chanceOfRain}%`
+        locationDisplay.innerHTML = `${data.location.city}, ${data.location.country}`
+        dateDisplay.innerHTML = `${data.current.date}`
+        currentTempDisplay.innerHTML = `${data.current.temp}°${tempType}`
+        descriptionDisplay.innerHTML = `${data.current.description}`
+        feelsLikeDisplay.innerHTML = `${data.current.feelsLike}°${tempType}`
+        windDisplay.innerHTML = `${data.current.windSpeed} ${unitType} ${data.current.windDirection}`
+        humidityDisplay.innerHTML = `${data.current.humidity}%`
+        uvDisplay.innerHTML = `${data.current.uv}`
+        visibilityDisplay.innerHTML = `${data.current.vis} ${unitType}`
+        cloudDisplay.innerHTML = `${data.current.clouds}%`
+        chanceOfRainDisplay.innerHTML = `${data.current.chanceOfRain}%`
+        weatherIconDisplay.src = `${data.current.weatherIcon}`
     }
 
     function renderForecast(data, units) {
-        const forecastData = data.weatherData.forecast
+        const forecastData = data.forecast
         const display = document.querySelector('.forecast')
         display.innerHTML = ''
 
         forecastData.forEach(element => {
             let tempHigh
             let tempLow
-            const weatherCode = element.day.condition.weatherCode
-            console.log(element.date)
             const d = new Date(element.date)
-            d.setDate(d.getDate() + 1) // Bug fix for when default Date is one day behind
+            d.setDate(d.getDate() + 1) // Bug fix: default Date is otherwise one day behind
             const day = d.toLocaleDateString([], { weekday: 'long'})
-            console.log(day)
 
             if (units == 'imperial') {
                 tempHigh = Math.round(element.day.maxtemp_f)
@@ -86,6 +84,7 @@ const dom = (() => {
 
             const content = document.createElement('div')
             const dayDisplay = document.createElement('h2')
+            const iconDisplay = document.createElement('img')
             const tempHighDisplay = document.createElement('h2')
             const tempLowDisplay = document.createElement('h2')
 
@@ -93,11 +92,13 @@ const dom = (() => {
             tempLowDisplay.classList.add('light-blue')
             
             dayDisplay.innerHTML = day
+            iconDisplay.src = `https:${element.day.condition.icon}`
             tempHighDisplay.innerHTML = tempHigh
             tempLowDisplay.innerHTML = tempLow
 
 
             content.appendChild(dayDisplay)
+            content.appendChild(iconDisplay)
             content.appendChild(tempHighDisplay)
             content.appendChild(tempLowDisplay)
 

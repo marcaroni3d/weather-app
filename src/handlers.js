@@ -1,7 +1,5 @@
 import api from "./api";
 import dom from "./dom";
-const dayjs = require('dayjs')
-dayjs().format()
 
 const handlers = (() => {
     const topNav = document.querySelector('.top-nav')

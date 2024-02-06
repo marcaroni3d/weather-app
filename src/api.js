@@ -21,7 +21,7 @@ const api = (() => {
                     day: 'numeric'
                 }),
                 description: weatherData.current.condition.text,
-                weatherCode: weatherData.current.condition.code,
+                weatherIcon: weatherData.current.condition.icon,
                 temp: '',
                 tempC: Math.round(weatherData.current.temp_c),
                 tempF: Math.round(weatherData.current.temp_f),
@@ -56,18 +56,9 @@ const api = (() => {
         return processData({ weatherData, units })
     }
 
-    async function fetchWeatherKeys() {
-        const keyData = await fetch(
-            'https://www.weatherapi.com/docs/weather_conditions.json', 
-            { mode: 'cors' })
-        const weatherKeys = await keyData.json()
-        return weatherKeys
-    }
-
     async function fetchData(location, units) {
         const weatherData = await fetchWeatherData(location, units)
-        const keys = await fetchWeatherKeys()
-        return { weatherData, keys }
+        return weatherData
     }
 
     return {
